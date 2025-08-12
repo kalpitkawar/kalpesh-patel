@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - IPO Pulse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IPO Pulse</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="news.html">News</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container" style="max-width:400px;margin-top:40px;">
+        <section class="hero" style="margin-bottom:32px;">
+            <h2 class="hero-title">User Login</h2>
+            <p class="hero-desc">Login to access your dashboard, track IPOs, and manage alerts.</p>
+        </section>
+        <form id="login-form">
+            <label for="login">Email / Mobile / Username</label>
+            <input type="text" id="login" name="login" required autofocus>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+            <div id="login-msg" style="margin-top:10px;"></div>
+        </form>
+        <p style="margin-top:18px;">Don't have an account? <a href="register.html">Register here</a></p>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 IPO Pulse. All rights reserved. | Designed for investors</p>
+        </div>
+    </footer>
+    <script src="login_v2.js"></script>
+</body>
+</html>

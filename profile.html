@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - IPO Pulse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="dark-mode-toggle" style="position:fixed;top:16px;right:16px;z-index:1000;">🌙 Dark Mode</button>
+    <main class="container" style="max-width:500px;margin-top:40px;">
+        <section class="hero" style="margin-bottom:32px;">
+            <h2 class="hero-title">User Profile</h2>
+            <p class="hero-desc">Manage your account details, update your contact info, and set your IPO alert preferences.</p>
+        </section>
+        <form id="profile-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="mobile">Mobile Number</label>
+            <input type="text" id="mobile" name="mobile" required pattern="[0-9]{10,15}" maxlength="15">
+            <label for="password">New Password (leave blank to keep current)</label>
+            <input type="password" id="password" name="password">
+            <label><input type="checkbox" id="email_alerts"> Receive IPO Email Alerts</label>
+            <button type="submit">Update Profile</button>
+            <div id="profile-msg" style="margin-top:10px;"></div>
+        </form>
+        <button onclick="logout()" class="cta-btn" style="margin-top:20px;">Logout</button>
+        <section id="demat-section" style="margin-top:40px;">
+            <h3>My Demat Accounts</h3>
+            <form id="demat-form" style="margin-bottom:18px;">
+                <input type="text" id="demat_account_number" placeholder="Account Number" required maxlength="32">
+                <input type="text" id="demat_depository" placeholder="Depository (e.g. CDSL/NSDL)" required maxlength="32">
+                <input type="text" id="demat_holder_name" placeholder="Holder Name (optional)" maxlength="100">
+                <button type="submit">Add Demat Account</button>
+            </form>
+            <ul id="demat-list" style="list-style:none;padding:0;"></ul>
+            <button id="check-allotment-btn" type="button" style="margin-top:10px;">Check All Allotments</button>
+            <div id="allotment-results" style="margin-top:18px;"></div>
+        </section>
+
+        <section id="ipo-app-section" style="margin-top:40px;">
+            <h3>My IPO Applications</h3>
+            <form id="ipo-app-form" style="margin-bottom:18px;">
+                <select id="ipo_app_ipo_id" required></select>
+                <select id="ipo_app_demat_id" required></select>
+                <input type="number" id="ipo_app_lots" placeholder="Applied Lots" min="1" required>
+                <input type="date" id="ipo_app_date" required>
+                <button type="submit">Add Application</button>
+            </form>
+            <ul id="ipo-app-list" style="list-style:none;padding:0;"></ul>
+            <div id="ipo-app-msg" style="margin-top:10px;"></div>
+        </section>
+
+        <section id="ipo-analytics-section" style="margin-top:40px;">
+            <h3>IPO Performance Analytics</h3>
+            <div id="ipo-analytics-summary"></div>
+            <canvas id="ipo-analytics-chart" style="max-width:100%;margin-top:20px;"></canvas>
+        </section>
+
+        <section id="notifications-section" style="margin-top:40px;">
+            <h3>Notifications & Alerts</h3>
+            <ul id="notifications-list" style="list-style:none;padding:0;"></ul>
+            <div id="notifications-msg" style="margin-top:10px;"></div>
+        </section>
+
+        <section id="export-section" style="margin-top:40px;">
+            <h3>Export My Data</h3>
+            <button id="export-demat-btn" type="button">Export Demat Accounts (CSV)</button>
+            <button id="export-ipo-app-btn" type="button">Export IPO Applications (CSV)</button>
+            <div id="export-msg" style="margin-top:10px;"></div>
+        </section>
+
+        <section id="faq-section" style="margin-top:40px;">
+            <h3>FAQ & Help</h3>
+            <details><summary>How do I add a demat account?</summary><div>Go to your profile, scroll to "My Demat Accounts", fill the form, and click Add.</div></details>
+            <details><summary>How do I track my IPO applications?</summary><div>Use the "My IPO Applications" section to log and view your IPO applications and status.</div></details>
+            <details><summary>How do I check IPO allotment for all my accounts?</summary><div>Click the "Check All Allotments" button in the Demat Accounts section.</div></details>
+            <details><summary>How do I get IPO notifications?</summary><div>Enable email alerts in your profile and check the Notifications section for updates.</div></details>
+            <details><summary>How do I export my data?</summary><div>Use the Export buttons above to download your demat or IPO application data as CSV.</div></details>
+            <details><summary>Need more help?</summary><div>Contact our support team at <a href="mailto:support@ipopulse.com">support@ipopulse.com</a>.</div></details>
+        </section>
+        </section>
+        </section>
+        </section>
+            <div id="demat-msg" style="margin-top:10px;"></div>
+        </section>
+    </main>
+    <script src="profile.js"></script>
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 IPO Pulse. All rights reserved. | Designed for investors</p>
+            </div>
+        </footer>
+</body>
+</html>

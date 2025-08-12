@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage IPOs - IPO Pulse Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IPO Pulse Admin</h1>
+            <nav>
+                <a href="admin_dashboard.html">Dashboard</a>
+                <a href="admin_ipos.html" class="active">Manage IPOs</a>
+                <a href="admin_news.html">Manage News</a>
+                <a href="index.html">View Site</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <section class="hero" style="margin-bottom:32px;">
+            <h2 class="hero-title">Manage IPOs</h2>
+            <p class="hero-desc">Add, view, and manage all IPOs from one place. Keep your IPO database up to date for your users.</p>
+        </section>
+        <form id="add-ipo-form">
+            <h3 style="margin-bottom:12px;">Add New IPO</h3>
+            <input type="text" name="name" placeholder="IPO Name" required>
+            <input type="date" name="open_date" required>
+            <input type="date" name="close_date" required>
+            <input type="number" name="price" placeholder="Price" step="0.01" required>
+            <textarea name="details" placeholder="Details" required></textarea>
+            <select name="status">
+                <option value="upcoming">Upcoming</option>
+                <option value="live">Live</option>
+                <option value="closed">Closed</option>
+            </select>
+            <button type="submit">Add IPO</button>
+            <div id="add-ipo-msg" style="margin-top:10px;"></div>
+        </form>
+        <section id="ipo-list-admin">
+            <!-- IPOs will be listed here -->
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 IPO Pulse. All rights reserved. | Designed for investors</p>
+        </div>
+    </footer>
+    <script src="admin_ipos.js"></script>
+</body>
+</html>

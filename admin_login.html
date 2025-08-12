@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - IPO Pulse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container" style="max-width:400px;margin-top:40px;">
+        <section class="hero" style="margin-bottom:32px;">
+            <h2 class="hero-title">Admin Login</h2>
+            <p class="hero-desc">Login to securely manage IPOs, news, and users.</p>
+        </section>
+        <form id="login-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+            <div id="login-error" style="color:red;margin-top:10px;"></div>
+        </form>
+    </main>
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 IPO Pulse. All rights reserved. | Designed for investors</p>
+            </div>
+        </footer>
+    <script src="admin_login.js"></script>
+</body>
+</html>

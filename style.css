@@ -1,0 +1,464 @@
+/* IPO Table Styles */
+.ipo-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(30, 40, 90, 0.12);
+    margin-top: 20px;
+}
+
+.ipo-table thead {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    color: #fff;
+}
+
+.ipo-table th, .ipo-table td {
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.ipo-table th {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.ipo-table tr.ipo-row {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.ipo-table tr.ipo-row:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(30, 40, 90, 0.15);
+}
+
+.ipo-table tr.ipo-row:nth-child(even) {
+    background: #fafafa;
+}
+
+.ipo-table tr.ipo-row:nth-child(even):hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+}
+
+.ipo-table td:first-child {
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.ipo-details-link {
+    color: #3949ab;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(57, 73, 171, 0.1);
+    transition: all 0.2s;
+}
+
+.ipo-details-link:hover {
+    background: #3949ab;
+    color: #fff;
+}
+
+/* Tab Button Improvements */
+.ipo-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    border: none;
+    background: #f5f5f5;
+    color: #666;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(30, 40, 90, 0.3);
+    transform: translateY(-2px);
+}
+
+.tab-btn:hover:not(.active) {
+    background: #e3e6f3;
+    color: #1a237e;
+    transform: translateY(-1px);
+}
+
+/* Search Bar Improvements */
+#search {
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 14px;
+    background: #fff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#search:focus {
+    border-color: #3949ab;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(57, 73, 171, 0.2);
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .ipo-table {
+        font-size: 12px;
+    }
+    
+    .ipo-table th, .ipo-table td {
+        padding: 10px 8px;
+    }
+    
+    .tab-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    #search {
+        max-width: 100% !important;
+    }
+}
+/* Dark mode toggle */
+.dark-mode body {
+    background: #181a20;
+    color: #e0e0e0;
+}
+.dark-mode header, .dark-mode footer {
+    background: #23263a;
+    color: #fff;
+}
+.dark-mode .ipo-card, .dark-mode form, .dark-mode .news-article {
+    background: #23263a;
+    color: #e0e0e0;
+    box-shadow: 0 2px 12px rgba(30,40,90,0.18);
+}
+.dark-mode .ipo-title, .dark-mode .news-title {
+    color: #90caf9;
+}
+.dark-mode .ipo-details-link, .dark-mode nav a {
+    color: #90caf9;
+}
+.dark-mode .tab-btn.active, .dark-mode .tab-btn:hover {
+    background: #3949ab;
+    color: #fff;
+}
+.dark-mode nav a.active, .dark-mode nav a:hover {
+    border-bottom: 2px solid #90caf9;
+}
+.dark-mode input, .dark-mode textarea, .dark-mode select {
+    background: #23263a;
+    color: #e0e0e0;
+    border: 1px solid #3949ab;
+}
+.dark-mode input:focus, .dark-mode textarea:focus, .dark-mode select:focus {
+    border: 1.5px solid #90caf9;
+}
+.dark-mode .cta-btn {
+    background: linear-gradient(90deg, #3949ab 60%, #23263a 100%);
+    color: #fff;
+}
+.dark-mode .cta-btn:hover {
+    background: linear-gradient(90deg, #23263a 60%, #3949ab 100%);
+}
+@media (max-width: 500px) {
+    .hero-title {
+        font-size: 1.3em;
+    }
+    .ipo-title {
+        font-size: 1em;
+    }
+    .ipo-card, form {
+        padding: 10px 2px 8px 2px;
+    }
+}
+/* Hero Section */
+.hero {
+    background: linear-gradient(90deg, #e3e6f3 60%, #f4f7fb 100%);
+    padding: 48px 0 32px 0;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(30,40,90,0.04);
+}
+.hero-title {
+    font-size: 2.2em;
+    color: #1a237e;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+.hero-desc {
+    font-size: 1.15em;
+    color: #3949ab;
+    margin-bottom: 24px;
+    max-width: 600px;
+}
+.cta-btn {
+    display: inline-block;
+    background: linear-gradient(90deg, #3949ab 60%, #1a237e 100%);
+    color: #fff;
+    font-weight: 600;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(30,40,90,0.10);
+    transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover {
+    background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+/* Card Animation */
+.ipo-card {
+    /* ...existing code... */
+    animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+}
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+/* News Section */
+.news-article {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(30, 40, 90, 0.08);
+    padding: 20px;
+    margin-bottom: 24px;
+}
+.news-title {
+    margin: 0 0 8px 0;
+    color: #1a237e;
+    font-size: 1.15em;
+}
+.news-date {
+    font-size: 0.95em;
+    color: #888;
+    margin-bottom: 10px;
+}
+.news-content {
+    font-size: 1em;
+    color: #222;
+}
+/* IPO Tabs */
+.ipo-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.tab-btn {
+    padding: 8px 20px;
+    border: none;
+    background: #e3e6f3;
+    color: #1a237e;
+    font-weight: 500;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s;
+}
+.tab-btn.active, .tab-btn:hover {
+    background: #1a237e;
+    color: #fff;
+}
+/* Visually hidden for accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+/* Spinner animation */
+#loading-spinner img {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+    color: #222;
+    min-height: 100vh;
+}
+header {
+    background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+    color: #fff;
+    padding: 24px 0 16px 0;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(30,40,90,0.07);
+}
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+nav a {
+    color: #fff;
+    margin-left: 24px;
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: border 0.2s;
+}
+nav a.active, nav a:hover {
+    border-bottom: 2px solid #fff;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+.search-bar {
+    margin-bottom: 24px;
+    text-align: right;
+}
+#search {
+    padding: 10px 14px;
+    border: 1px solid #bdbdbd;
+    border-radius: 6px;
+    width: 260px;
+    font-size: 1em;
+    background: #fff;
+    transition: border 0.2s;
+}
+#search:focus {
+    border: 1.5px solid #3949ab;
+    outline: none;
+}
+#ipo-list, #ipo-tab-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+.ipo-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(30, 40, 90, 0.10);
+    padding: 24px 20px 18px 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    min-height: 160px;
+}
+.ipo-card:hover {
+    box-shadow: 0 6px 24px rgba(30, 40, 90, 0.18);
+    transform: translateY(-2px) scale(1.01);
+}
+.ipo-title {
+    font-size: 1.25em;
+    margin: 0 0 10px 0;
+    color: #1a237e;
+    font-weight: 600;
+}
+.ipo-dates, .ipo-price {
+    font-size: 1em;
+    color: #444;
+    margin-bottom: 8px;
+}
+.ipo-details-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: #3949ab;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px dotted #3949ab;
+    transition: color 0.2s;
+}
+.ipo-details-link:hover {
+    color: #1a237e;
+    border-bottom: 1px solid #1a237e;
+}
+form {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(30,40,90,0.07);
+    padding: 24px 20px 18px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+form label {
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+form input, form textarea, form select, form button {
+    font-size: 1em;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #bdbdbd;
+    margin-bottom: 8px;
+}
+form input:focus, form textarea:focus, form select:focus {
+    border: 1.5px solid #3949ab;
+    outline: none;
+}
+form button {
+    background: linear-gradient(90deg, #3949ab 60%, #1a237e 100%);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+form button:hover {
+    background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
+}
+/* Responsive */
+@media (max-width: 700px) {
+    .container {
+        max-width: 98vw;
+        padding: 0 4vw;
+    }
+    #ipo-list, #ipo-tab-content {
+        grid-template-columns: 1fr;
+    }
+    .ipo-card, form {
+        padding: 18px 8px 14px 8px;
+    }
+}
+footer {
+    background: #1a237e;
+    color: #fff;
+    text-align: center;
+    padding: 18px 0 12px 0;
+    margin-top: 48px;
+    font-size: 1em;
+    box-shadow: 0 -2px 8px rgba(30,40,90,0.07);
+}
+/* ...existing code... */
