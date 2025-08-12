@@ -1,101 +1,263 @@
-// Dark mode toggle
+// Dark mode toggle with persistence
 document.addEventListener('DOMContentLoaded', function() {
     const btn = document.getElementById('dark-mode-toggle');
+    
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+    }
+    
     if (btn) {
+        // Update button text based on current theme
+        btn.textContent = document.documentElement.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        
         btn.onclick = function() {
             document.documentElement.classList.toggle('dark-mode');
-            btn.textContent = document.documentElement.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            
+            // Save theme preference
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         };
     }
 });
-// Export data logic
+
+// Export data functionality with improved error handling
 document.addEventListener('DOMContentLoaded', function() {
     const exportDematBtn = document.getElementById('export-demat-btn');
     const exportIpoAppBtn = document.getElementById('export-ipo-app-btn');
+    
     function downloadCSV(filename, rows) {
-        const process = v => '"' + (String(v).replace(/"/g, '""')) + '"';
-        const csv = rows.map(r => r.map(process).join(',')).join('\n');
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        try {
+            const process = v => '"' + (String(v || '').replace(/"/g, '""')) + '"';
+            const csv = rows.map(r => r.map(process).join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            return true;
+        } catch (error) {
+            console.error('Error downloading CSV:', error);
+            alert('Failed to download file. Please try again.');
+            return false;
+        }
     }
+    
+    function showExportStatus(button, message, isError = false) {
+        const originalText = button.textContent;
+        button.textContent = message;
+        button.disabled = true;
+        button.style.color = isError ? '#f44336' : '#4caf50';
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+            button.style.color = '';
+        }, 2000);
+    }
+    
     if (exportDematBtn) {
         exportDematBtn.onclick = function() {
-            fetch('../backend/user_demat.php')
-                .then(res => res.json())
+            showExportStatus(this, 'Exporting...');
+            
+            // Updated API path
+            fetch('user_demat.php')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
                 .then(data => {
-                    if (data.success && data.accounts.length) {
+                    if (data.success && data.accounts && data.accounts.length > 0) {
                         const rows = [
-                            ['Account Number', 'Depository', 'Holder Name']
+                            ['Account Number', 'Depository', 'Holder Name', 'Date Added']
                         ];
                         data.accounts.forEach(acc => {
-                            rows.push([acc.account_number, acc.depository, acc.holder_name || '']);
+                            rows.push([
+                                acc.account_number || '',
+                                acc.depository || '',
+                                acc.holder_name || '',
+                                acc.date_added || ''
+                            ]);
                         });
-                        downloadCSV('demat_accounts.csv', rows);
+                        
+                        if (downloadCSV('demat_accounts.csv', rows)) {
+                            showExportStatus(exportDematBtn, 'Downloaded!');
+                        } else {
+                            showExportStatus(exportDematBtn, 'Export failed', true);
+                        }
+                    } else {
+                        showExportStatus(exportDematBtn, 'No data to export', true);
                     }
+                })
+                .catch(error => {
+                    console.error('Export error:', error);
+                    showExportStatus(exportDematBtn, 'Export failed', true);
                 });
         };
     }
+    
     if (exportIpoAppBtn) {
         exportIpoAppBtn.onclick = function() {
-            fetch('../backend/user_ipo_applications.php')
-                .then(res => res.json())
+            showExportStatus(this, 'Exporting...');
+            
+            // Updated API path
+            fetch('user_ipo_applications.php')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
                 .then(data => {
-                    if (data.success && data.applications.length) {
+                    if (data.success && data.applications && data.applications.length > 0) {
                         const rows = [
-                            ['IPO Name', 'Account Number', 'Lots', 'Date', 'Status', 'Listing Gain']
+                            ['IPO Name', 'Account Number', 'Lots Applied', 'Application Date', 'Status', 'Listing Gain']
                         ];
                         data.applications.forEach(app => {
-                            rows.push([app.ipo_name, app.account_number, app.applied_lots, app.application_date, app.status, app.listing_gain || '']);
+                            rows.push([
+                                app.ipo_name || '',
+                                app.account_number || '',
+                                app.applied_lots || '',
+                                app.application_date || '',
+                                app.status || '',
+                                app.listing_gain || ''
+                            ]);
                         });
-                        downloadCSV('ipo_applications.csv', rows);
+                        
+                        if (downloadCSV('ipo_applications.csv', rows)) {
+                            showExportStatus(exportIpoAppBtn, 'Downloaded!');
+                        } else {
+                            showExportStatus(exportIpoAppBtn, 'Export failed', true);
+                        }
+                    } else {
+                        showExportStatus(exportIpoAppBtn, 'No data to export', true);
                     }
+                })
+                .catch(error => {
+                    console.error('Export error:', error);
+                    showExportStatus(exportIpoAppBtn, 'Export failed', true);
                 });
         };
     }
 });
-// Notifications management
+
+// Notifications management with improved UX
 document.addEventListener('DOMContentLoaded', function() {
     const notesList = document.getElementById('notifications-list');
     const notesMsg = document.getElementById('notifications-msg');
+    
     function loadNotifications() {
-        fetch('../backend/user_notifications.php')
-            .then(res => res.json())
+        if (!notesList) return;
+        
+        notesList.innerHTML = '<li class="loading">Loading notifications...</li>';
+        
+        // Updated API path
+        fetch('user_notifications.php')
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
             .then(data => {
                 notesList.innerHTML = '';
-                if (data.success && data.notifications.length) {
+                
+                if (data.success && data.notifications && data.notifications.length > 0) {
                     data.notifications.forEach(note => {
                         const li = document.createElement('li');
-                        li.innerHTML = `<span style='${note.is_read ? '' : 'font-weight:bold;'}'>${note.message}</span> <small style='color:#888;'>${note.created_at}</small> ${!note.is_read ? '<button data-id="'+note.id+'" class="mark-read-btn">Mark as read</button>' : ''}`;
+                        li.className = `notification-item ${note.is_read ? 'read' : 'unread'}`;
+                        li.innerHTML = `
+                            <div class="notification-content">
+                                <span class="notification-message">${escapeHtml(note.message)}</span>
+                                <small class="notification-date">${formatDate(note.created_at)}</small>
+                            </div>
+                            ${!note.is_read ? `<button class="mark-read-btn" data-id="${note.id}" title="Mark as read">✓</button>` : ''}
+                        `;
                         notesList.appendChild(li);
                     });
                 } else {
-                    notesList.innerHTML = '<li>No notifications.</li>';
+                    notesList.innerHTML = '<li class="empty-state">No notifications available.</li>';
                 }
+            })
+            .catch(error => {
+                console.error('Error loading notifications:', error);
+                notesList.innerHTML = '<li class="error">Unable to load notifications. Please try again.</li>';
             });
     }
+    
+    function markAsRead(notificationId) {
+        // Updated API path
+        fetch('user_notifications.php', {
+            method: 'PUT',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id: notificationId })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                loadNotifications();
+            } else {
+                alert('Failed to mark notification as read. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error marking notification as read:', error);
+            alert('Failed to mark notification as read. Please try again.');
+        });
+    }
+    
     if (notesList) {
         loadNotifications();
-        notesList.onclick = function(e) {
+        
+        notesList.addEventListener('click', function(e) {
             if (e.target.classList.contains('mark-read-btn')) {
                 const id = e.target.getAttribute('data-id');
-                fetch('../backend/user_notifications.php', {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) loadNotifications();
-                });
+                if (id) {
+                    e.target.disabled = true;
+                    e.target.textContent = '...';
+                    markAsRead(id);
+                }
             }
-        };
+        });
+    }
+    
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        try {
+            return new Date(dateString).toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        } catch {
+            return dateString;
+        }
     }
 });
 document.addEventListener('DOMContentLoaded', function() {

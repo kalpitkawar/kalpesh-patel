@@ -10,7 +10,7 @@
     <header>
         <div class="container">
             <h1>IPO Pulse</h1>
-            <nav>
+            <nav role="navigation" aria-label="Main navigation">
                 <a href="index.html">Home</a>
                 <a href="news.html">News</a>
             </nav>
@@ -21,13 +21,17 @@
             <h2 class="hero-title">User Login</h2>
             <p class="hero-desc">Login to access your dashboard, track IPOs, and manage alerts.</p>
         </section>
-        <form id="login-form">
+        <form id="login-form" novalidate>
             <label for="login">Email / Mobile / Username</label>
-            <input type="text" id="login" name="login" required autofocus>
+            <input type="text" id="login" name="login" required autofocus autocomplete="username" aria-describedby="login-help">
+            <small id="login-help" class="help-text">Enter your email, mobile number, or username</small>
+            
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required autocomplete="current-password" aria-describedby="password-help">
+            <small id="password-help" class="help-text">Enter your account password</small>
+            
             <button type="submit">Login</button>
-            <div id="login-msg" style="margin-top:10px;"></div>
+            <div id="login-msg" role="alert" aria-live="polite" style="margin-top:10px;"></div>
         </form>
         <p style="margin-top:18px;">Don't have an account? <a href="register.html">Register here</a></p>
     </main>
@@ -36,6 +40,6 @@
             <p>&copy; 2025 IPO Pulse. All rights reserved. | Designed for investors</p>
         </div>
     </footer>
-    <script src="login_v2.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

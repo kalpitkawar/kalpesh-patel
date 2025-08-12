@@ -8,13 +8,13 @@
     <meta name="author" content="IPO Pulse">
     <title>IPO Pulse - Track Live IPOs</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="assets/favicon.ico">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
 </head>
 <body>
     <header>
         <div class="container">
             <h1>IPO Pulse</h1>
-            <nav>
+            <nav role="navigation" aria-label="Main navigation">
                 <a href="index.html">Home</a>
                 <a href="news.html">News</a>
                 <a href="#about">About</a>
@@ -36,10 +36,13 @@
                 <button class="tab-btn" data-tab="upcoming">Upcoming</button>
                 <button class="tab-btn" data-tab="closed">Closed</button>
             </div>
-            <input type="text" id="search" placeholder="Search IPOs..." aria-label="Search IPOs" style="max-width:260px;">
+            <div>
+                <label for="search" class="visually-hidden">Search IPOs</label>
+                <input type="text" id="search" placeholder="Search IPOs..." aria-label="Search IPOs" style="max-width:260px;">
+            </div>
         </section>
         <div id="loading-spinner" aria-live="polite" style="display:none;text-align:center;margin:40px 0;">
-            <img src="assets/spinner.svg" alt="Loading..." width="48" height="48">
+            <img src="spinner.svg" alt="Loading..." width="48" height="48">
         </div>
         <section id="ipo-table-section" aria-live="polite">
             <table id="ipo-table" class="ipo-table">

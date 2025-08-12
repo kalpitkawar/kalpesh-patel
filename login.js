@@ -1,27 +1,76 @@
 document.getElementById('login-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    
+    const loginField = document.getElementById('login');
+    const passwordField = document.getElementById('password');
+    const login = loginField.value.trim();
+    const password = passwordField.value;
     const msg = document.getElementById('login-msg');
-    msg.textContent = 'Logging in...';
-    fetch('../backend/user_login.php', {
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    
+    // Basic client-side validation
+    if (!login) {
+        showMessage(msg, 'Please enter your username, email, or mobile number.', 'error');
+        loginField.focus();
+        return;
+    }
+    
+    if (!password) {
+        showMessage(msg, 'Please enter your password.', 'error');
+        passwordField.focus();
+        return;
+    }
+    
+    if (password.length < 6) {
+        showMessage(msg, 'Password must be at least 6 characters.', 'error');
+        passwordField.focus();
+        return;
+    }
+    
+    // Disable form during submission
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in...';
+    showMessage(msg, 'Logging in...', 'info');
+    
+    // Updated API path (removing ../backend/)
+    fetch('user_login.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ login, password })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+    })
     .then(data => {
         if (data.success) {
-            msg.style.color = 'green';
-            msg.textContent = 'Login successful! Redirecting...';
-            setTimeout(() => window.location.href = 'index.html', 1000);
+            showMessage(msg, 'Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
         } else {
-            msg.style.color = 'red';
-            msg.textContent = data.error || 'Login failed.';
+            showMessage(msg, data.error || 'Login failed. Please check your credentials.', 'error');
+            passwordField.focus();
         }
     })
-    .catch(() => {
-        msg.style.color = 'red';
-        msg.textContent = 'Server error.';
+    .catch(error => {
+        console.error('Login error:', error);
+        showMessage(msg, 'Unable to connect to server. Please try again.', 'error');
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Login';
     });
 });
+
+function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = `message ${type}`;
+    element.style.color = type === 'error' ? '#f44336' : 
+                         type === 'success' ? '#4caf50' : '#666';
+}
