@@ -1,0 +1,31 @@
+# Database files
+*.sqlite
+*.db
+
+# Log files
+*.log
+sync.log
+
+# Backup files
+*_backup.php
+*_backup.*
+
+# Temporary files
+/tmp/
+test_*.php
+
+# Lock files
+*.lock
+
+# Environment specific
+config_local.php
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
