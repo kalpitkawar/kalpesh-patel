@@ -77,27 +77,66 @@ document.addEventListener('DOMContentLoaded', function() {
         if (spinner) spinner.style.display = show ? 'block' : 'none';
     }
 
+    function showFallbackMessage() {
+        const messageDiv = document.getElementById('api-status-message') || createStatusMessage();
+        messageDiv.style.display = 'block';
+        messageDiv.style.background = '#fff3cd';
+        messageDiv.style.color = '#856404';
+        messageDiv.innerHTML = '⚠️ Live API data temporarily unavailable. Showing sample data.';
+    }
+
+    function showApiError() {
+        const messageDiv = document.getElementById('api-status-message') || createStatusMessage();
+        messageDiv.style.display = 'block';
+        messageDiv.style.background = '#f8d7da';
+        messageDiv.style.color = '#721c24';
+        messageDiv.innerHTML = '❌ Unable to fetch live IPO data. Showing cached data only.';
+    }
+
+    function createStatusMessage() {
+        const messageDiv = document.createElement('div');
+        messageDiv.id = 'api-status-message';
+        messageDiv.style.cssText = 'padding:10px;margin:10px 0;border-radius:5px;text-align:center;display:none;';
+        
+        const searchSection = document.querySelector('.search-bar');
+        searchSection.parentNode.insertBefore(messageDiv, searchSection.nextSibling);
+        
+        return messageDiv;
+    }
+
     showSpinner(true);
     fetch('get_ipos.php')
         .then(response => response.json())
         .then(data => {
-            ipos = data;
+            ipos = Array.isArray(data) ? data : [];
             Promise.all([
                 fetch('fetch_ipo_api.php?type=upcoming').then(r => r.json()),
                 fetch('fetch_ipo_api.php?type=closed').then(r => r.json())
             ]).then(([upcoming, closed]) => {
-                apiIpos.upcoming = Array.isArray(upcoming) ? upcoming : (upcoming.data || []);
-                apiIpos.closed = Array.isArray(closed) ? closed : (closed.data || []);
+                // Handle fallback data structure
+                if (upcoming.fallback || closed.fallback) {
+                    console.warn('Using fallback data for API IPOs');
+                    showFallbackMessage();
+                }
+                
+                apiIpos.upcoming = Array.isArray(upcoming) ? upcoming : 
+                                  Array.isArray(upcoming.data) ? upcoming.data : [];
+                apiIpos.closed = Array.isArray(closed) ? closed : 
+                                Array.isArray(closed.data) ? closed.data : [];
+                                
                 renderTabs();
                 renderTable(searchInput.value);
                 showSpinner(false);
-            }).catch(() => {
+            }).catch((error) => {
+                console.error('API fetch failed:', error);
+                showApiError();
                 renderTabs();
                 renderTable(searchInput.value);
                 showSpinner(false);
             });
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error('Database fetch failed:', error);
             ipoTableBody.innerHTML = '<tr><td colspan="9" style="color:red;text-align:center;">Error loading IPO data. Please try again later.</td></tr>';
             showSpinner(false);
         });

@@ -1,0 +1,11 @@
+[2025-08-13 17:01:23] Starting periodic IPO sync...
+[2025-08-13 17:01:23] Sync output: Syncing upcoming IPOs...
+Failed to fetch upcoming IPOs from API
+Syncing closed IPOs...
+Failed to fetch closed IPOs from API
+
+Sync Summary:
+upcoming: 0 synced, 0 failed
+closed: 0 synced, 0 failed
+Sync complete.
+[2025-08-13 17:01:23] Periodic sync completed successfully.
