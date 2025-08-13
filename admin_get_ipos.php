@@ -1,15 +1,14 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+require_once 'config.php';
+
 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     echo json_encode(["error" => "Unauthorized"]);
     exit();
 }
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ipo_pulse";
-$conn = new mysqli($servername, $username, $password, $dbname);
+
+$conn = get_db_connection();
 if ($conn->connect_error) {
     echo json_encode([]);
     exit();

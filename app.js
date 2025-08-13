@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (filtered.length === 0) {
             ipoTableBody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No IPOs found.</td></tr>';
+            updateMobileView([]);
             return;
         }
         filtered.forEach(ipo => {
@@ -71,10 +72,57 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
         });
+        
+        // Update mobile view as well
+        updateMobileView(filtered);
     }
 
     function showSpinner(show) {
         if (spinner) spinner.style.display = show ? 'block' : 'none';
+    }
+    
+    function updateMobileView(ipos) {
+        // Create or get mobile list container
+        let mobileList = document.getElementById('mobile-ipo-list');
+        if (!mobileList) {
+            mobileList = document.createElement('div');
+            mobileList.id = 'mobile-ipo-list';
+            mobileList.className = 'mobile-ipo-list';
+            document.getElementById('ipo-table-section').appendChild(mobileList);
+        }
+        
+        if (!ipos || ipos.length === 0) {
+            mobileList.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">No IPOs found.</div>';
+            return;
+        }
+        
+        mobileList.innerHTML = '';
+        ipos.forEach(ipo => {
+            const name = ipo.name || ipo.companyName || ipo.ipoName || 'N/A';
+            const open = ipo.openingDate || ipo.open_date || ipo.openDate || ipo.open || '-';
+            const close = ipo.closingDate || ipo.close_date || ipo.closeDate || ipo.close || '-';
+            const price = ipo.priceBand || ipo.price || ipo.priceband || ipo.priceBandLower || ipo.priceLower || '-';
+            const status = ipo.status || ipo.ipoStatus || 'upcoming';
+            const ipoId = ipo.id || ipo.ipoId || ipo.ipo_id || '';
+            
+            const card = document.createElement('div');
+            card.className = 'mobile-ipo-card';
+            card.onclick = () => {
+                if (ipoId) window.location.href = `ipo.html?id=${ipoId}`;
+            };
+            
+            card.innerHTML = `
+                <div class="ipo-name">${name}</div>
+                <div class="ipo-price">₹${price}</div>
+                <div class="ipo-dates">
+                    <span>Open: ${open}</span>
+                    <span>Close: ${close}</span>
+                </div>
+                <div class="ipo-status ${status.toLowerCase()}">${status}</div>
+            `;
+            
+            mobileList.appendChild(card);
+        });
     }
 
     showSpinner(true);
