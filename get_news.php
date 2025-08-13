@@ -1,10 +1,8 @@
 <?php
 header('Content-Type: application/json');
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ipo_pulse";
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once 'config.php';
+
+$conn = get_db_connection();
 if ($conn->connect_error) {
     echo json_encode([]);
     exit();

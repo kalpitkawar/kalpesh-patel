@@ -237,6 +237,72 @@
     /* ...existing code... */
     animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
 }
+
+/* Mobile IPO Cards */
+.mobile-ipo-list {
+    display: none; /* Hidden by default, shown on mobile */
+}
+
+.mobile-ipo-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(30, 40, 90, 0.12);
+    margin-bottom: 16px;
+    padding: 16px;
+    border-left: 4px solid #3949ab;
+    transition: all 0.3s ease;
+}
+
+.mobile-ipo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(30, 40, 90, 0.18);
+}
+
+.mobile-ipo-card .ipo-name {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 8px;
+}
+
+.mobile-ipo-card .ipo-price {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 8px;
+}
+
+.mobile-ipo-card .ipo-dates {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.mobile-ipo-card .ipo-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.mobile-ipo-card .ipo-status.upcoming {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.mobile-ipo-card .ipo-status.live {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+.mobile-ipo-card .ipo-status.closed {
+    background: #fafafa;
+    color: #666;
+}
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(30px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -439,17 +505,98 @@ form button {
 form button:hover {
     background: linear-gradient(90deg, #1a237e 60%, #3949ab 100%);
 }
-/* Responsive */
+/* Responsive Design Improvements */
 @media (max-width: 700px) {
     .container {
         max-width: 98vw;
         padding: 0 4vw;
     }
+    
+    /* Hide table on mobile and show cards instead */
+    .ipo-table {
+        display: none;
+    }
+    
+    /* Mobile IPO cards */
+    .mobile-ipo-list {
+        display: block;
+    }
+    
     #ipo-list, #ipo-tab-content {
         grid-template-columns: 1fr;
     }
+    
     .ipo-card, form {
         padding: 18px 8px 14px 8px;
+    }
+    
+    /* Mobile navigation */
+    header nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    header nav a {
+        padding: 8px 16px;
+        text-align: center;
+    }
+    
+    /* Mobile hero section */
+    .hero {
+        padding: 40px 0;
+    }
+    
+    .hero-title {
+        font-size: 2em;
+    }
+    
+    .hero-desc {
+        font-size: 1em;
+    }
+    
+    /* Mobile search and tabs */
+    .search-bar {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .ipo-tabs {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 8px;
+    }
+    
+    .tab-btn {
+        min-width: 80px;
+        flex-shrink: 0;
+    }
+    
+    #search {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 2vw;
+    }
+    
+    .hero-title {
+        font-size: 1.8em;
+    }
+    
+    .cta-btn {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}
+
+/* Desktop table - hidden on mobile */
+@media (min-width: 701px) {
+    .mobile-ipo-list {
+        display: none;
     }
 }
 footer {

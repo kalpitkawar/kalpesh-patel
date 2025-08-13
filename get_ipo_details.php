@@ -1,10 +1,8 @@
 <?php
 header('Content-Type: application/json');
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ipo_pulse";
-$conn = new mysqli($servername, $username, $password, $dbname);
+require_once 'config.php';
+
+$conn = get_db_connection();
 if ($conn->connect_error) {
     echo json_encode(["error" => "DB connection failed"]);
     exit();
@@ -14,8 +12,11 @@ if ($id <= 0) {
     echo json_encode(["error" => "Invalid ID"]);
     exit();
 }
-$sql = "SELECT * FROM ipos WHERE id = $id";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM ipos WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
 if ($result && $result->num_rows > 0) {
     echo json_encode($result->fetch_assoc());
 } else {
